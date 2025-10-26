@@ -1,11 +1,8 @@
-import asyncio
-import csv
 import json
 import logging
-import os
-import re
+from datetime import datetime
 
-from app.model import RegisterGroup
+from app.model import RegisterSequence, MeasurementGroup
 
 log = logging.getLogger(__name__)
 
@@ -43,12 +40,20 @@ def assemble_groups(registers):
     log.info(f"Final sequence: {chunk[0].number} - {chunk[-1].number}")
     sequences.append(chunk)
 
-    return [RegisterGroup(s) for s in sequences]
+    # order sequences by their group
+    groups = {}
+    for sequence in sequences:
+        name = sequence[0].group
+        if not name in groups:
+            groups[name] = [sequence]
+        else:
+            groups[name].append(sequence)
+
+    return [MeasurementGroup(name, sequences) for name, sequences in groups.items()]
 
 
-async def collect_data(client, group):
+async def collect_data(client, sequence):
 
-    sequence = group.registers
     start_number = sequence[0].number
     start_offset = start_number if start_number < 40000 else start_number - 40000
     num_words = len(sequence) * sequence[0].size
@@ -74,5 +79,13 @@ async def collect_data(client, group):
     return result
 
 
-def tedge_compile(time, tag_vlaues):
-    return "tedge/main///", json.dumps({})
+def tedge_compile(ts, group, tag_values):
+    device = tag_values[0].tag.split('.')[0]
+    data = {"time": datetime.fromtimestamp(ts).isoformat()}
+    for tag_value in tag_values:
+        _, l0, l1 = tag_value.tag.split('.')
+        if l0 not in data:
+            data[l0] = {}
+        data[l0][l1] = tag_value.value
+
+    return f"te/device/{device}///m/{group}", json.dumps(data)

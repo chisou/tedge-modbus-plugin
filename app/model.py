@@ -1,5 +1,3 @@
-from importlib.metadata import requires
-
 
 class TagValue:
     def __init__(self, tag, description, value):
@@ -80,11 +78,19 @@ class BitRegister(Register):
         )
 
 
-
-class RegisterGroup:
+class RegisterSequence:
+    """A sequence of registers that can be read in one pass."""
 
     def __init__(self, registers):
         self.registers = registers
         self.name = registers[0].group
         self.interval = registers[0].interval
 
+
+class MeasurementGroup:
+    """A logical grouping of registers that are part of one sample."""
+
+    def __init__(self, name, register_sequences):
+        self.name = name
+        self.sequences = register_sequences
+        self.interval = register_sequences[0][0].interval
