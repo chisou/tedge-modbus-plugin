@@ -5,7 +5,7 @@ from enum import Enum
 from itertools import count
 from typing import Self
 
-from app.registers import Register, IntRegister, DecimalRegister, BitRegister, TagValue, MapRegister, SimpleRegister
+from app.model import Register, IntRegister, DecimalRegister, BitRegister, TagValue, MapRegister, SimpleRegister
 
 log = logging.getLogger(__name__)
 
@@ -20,6 +20,8 @@ class RegisterParser:
         self.format_cell = 0
         self.value_min_cell = 0
         self.value_max_cell = 0
+        self.interval_cell = 0
+        self.group_cell = -1
         self.tag_cell = 0
 
     def set_cells(
@@ -29,17 +31,21 @@ class RegisterParser:
             format=None,
             value_min=None,
             value_max=None,
+            interval=None,
+            group=None,
             tag=None,
             description=None,
         ) -> Self:
         """Set named cell numbers."""
-        self.number_cell = number if number is not None else -1
-        self.size_cell = size or -1
-        self.format_cell = format or -1
-        self.value_min_cell = value_min or -1
-        self.value_max_cell = value_max or -1
-        self.tag_cell = tag or -1
-        self.description_cell = description or -1
+        self.number_cell = number
+        self.size_cell = size
+        self.format_cell = format
+        self.value_min_cell = value_min
+        self.value_max_cell = value_max
+        self.interval_cell = interval
+        self.group_cell = group
+        self.tag_cell = tag
+        self.description_cell = description
         return self
 
     def parse(self, lines) -> Register:
@@ -54,6 +60,8 @@ class IntRegisterParser(RegisterParser):
         return IntRegister(
             number=line[self.number_cell],
             size=line[self.size_cell],
+            interval=line[self.interval_cell],
+            group=line[self.group_cell],
             tag=line[self.tag_cell],
             description=line[self.description_cell],
         )
@@ -66,6 +74,8 @@ class DecimalRegisterParser(RegisterParser):
         return DecimalRegister(
             number=spec[self.number_cell],
             size=spec[self.size_cell],
+            interval=spec[self.interval_cell],
+            group=spec[self.group_cell],
             tag=spec[self.tag_cell],
             description=spec[self.description_cell],
             decimal_places=decimal_places,
@@ -95,6 +105,8 @@ class MapRegisterParser(RegisterParser):
         return MapRegister(
             number=spec[self.number_cell],
             size=spec[self.size_cell],
+            interval=spec[self.interval_cell],
+            group=spec[self.group_cell],
             tag=spec[self.tag_cell],
             description=spec[self.description_cell],
             value_parser=value_parser,
@@ -130,6 +142,8 @@ class BitRegisterParser(RegisterParser):
         return BitRegister(
             number=spec[self.number_cell],
             size=spec[self.size_cell],
+            interval=spec[self.interval_cell],
+            group=spec[self.group_cell],
             bit_map=bit_map,
         )
 
@@ -160,6 +174,8 @@ class RegisterLoader:
         self.value_min_column = 'Min'
         self.value_max_column = 'Max'
         self.uom_column = 'UOM'
+        self.group_column = 'Group'
+        self.interval_column = 'Interval'
         self.tag_column = 'Tag'
         self.description_column = 'Description'
 
@@ -176,14 +192,16 @@ class RegisterLoader:
 
     def set_columns(
             self,
-            number='Number',
-            size='Size',
-            format='Format',
-            value_min='Min',
-            value_max='Max',
-            uom='UOM',
-            tag='Tag',
-            description='Description',
+            number=None,
+            size=None,
+            format=None,
+            value_min=None,
+            value_max=None,
+            uom=None,
+            group=None,
+            interval=None,
+            tag=None,
+            description=None,
 
     ) -> Self:
         self.number_column = number or self.number_column
@@ -191,13 +209,16 @@ class RegisterLoader:
         self.format_column = format or self.format_column
         self.value_min_column = value_min or self.value_min_column
         self.value_max_column = value_max or self.value_max_column
+        self.uom_column = uom or self.uom_column
+        self.group_column = group or self.group_column
+        self.interval_column = interval or self.interval_column
         self.tag_column = tag or self.tag_column
         self.description_column = description or self.description_column
         return self
 
     def load_registers(self):
 
-        with open('boiler.csv') as csv_file:
+        with open(self.csv_file) as csv_file:
             lines = list(csv.reader(csv_file))
 
             # get column names and cell positions
@@ -209,15 +230,19 @@ class RegisterLoader:
                 ("Format", self.format_column),
                 ("Min Value", self.value_min_column),
                 ("Max Value", self.value_max_column),
+                ("Sampling Interval", self.interval_column),
+                ("Tag Group", self.group_column),
                 ("Tag", self.tag_column),
                 ("Description", self.description_column),
             ]:
                 if not expected_header in headers:
-                    raise ValueError(f"Unable to identify required{column_name} column (expected: '{expected_header}').")
+                    raise ValueError(f"Unable to identify required {column_name} column (expected: '{expected_header}').")
 
             # find cell positions by name
             number_cell = headers[self.number_column]
             format_cell = headers[self.format_column]
+            interval_cell = headers[self.interval_column]
+            group_cell = headers[self.group_column]
             tag_cell = headers[self.tag_column]
             description_cell = headers[self.description_column]
 
@@ -228,6 +253,8 @@ class RegisterLoader:
                 'format': format_cell,
                 'value_min': headers[self.value_min_column],
                 'value_max': headers[self.value_max_column],
+                'interval': interval_cell,
+                'group': group_cell,
                 'tag': tag_cell,
                 'description': description_cell,
             }
