@@ -48,14 +48,15 @@ class DecimalRegister(SimpleRegister):
     def _parse(self, value):
         return int(value) / 10 ** self.decimal_places
 
-#
-# class MapRegister(SimpleRegister):
-#     def __init__(self, number, description, category, tag, entries):
-#         super().__init__(number, description, category, tag)
-#         self.value_map = {x.value: x for x in entries}
-#
-#     def parse(self, value):
-#         return self.value_map.get(value, None)
+class MapRegister(SimpleRegister):
+
+    def __init__(self, number, size, tag, description, value_parser, value_map):
+        super().__init__(number, size, tag, description)
+        self.value_parser = value_parser
+        self.value_map = value_map
+
+    def _parse(self, value):
+        return self.value_map.get(self.value_parser(value), None)
 
 
 class BitRegister(Register):
@@ -69,7 +70,7 @@ class BitRegister(Register):
             TagValue(
                 tag_value.tag,
                 tag_value.description,
-                value=value & bit_value > 0,
+                value=int(value) & bit_value > 0,
             )
             for bit_value, tag_value in self.bit_map.items()
         )

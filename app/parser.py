@@ -5,7 +5,7 @@ from enum import Enum
 from itertools import count
 from typing import Self
 
-from app.registers import Register, IntRegister, DecimalRegister, BitRegister, TagValue
+from app.registers import Register, IntRegister, DecimalRegister, BitRegister, TagValue, MapRegister, SimpleRegister
 
 log = logging.getLogger(__name__)
 
@@ -72,6 +72,35 @@ class DecimalRegisterParser(RegisterParser):
         )
 
 
+class MapRegisterParser(RegisterParser):
+
+    def parse(self, lines):
+        spec = lines[0]
+        value_parser = int
+        value_map = {}
+        for i in count(1):
+            line = lines[i]
+            if line[self.number_cell]:  # assume that bitmap lines don't have number
+                log.debug(f"End of mapping detected. (Row: {i})")
+                break
+            value = line[self.value_min_cell] or line[self.value_max_cell]
+            if not value:
+                log.warning(f"No mapping value found in any value cell. (Row: {i})")
+                continue
+            new_value = value_parser(line[self.tag_cell] or value)
+            description = line[self.description_cell]
+            description = f'"{description}"' if description else 'no description'
+            log.info(f"Found mapping: {value} -> <{new_value}>  ({description})")
+            value_map[value] = new_value
+        return MapRegister(
+            number=spec[self.number_cell],
+            size=spec[self.size_cell],
+            tag=spec[self.tag_cell],
+            description=spec[self.description_cell],
+            value_parser=value_parser,
+            value_map=value_map,
+        )
+
 
 class BitRegisterParser(RegisterParser):
 
@@ -84,14 +113,15 @@ class BitRegisterParser(RegisterParser):
                 log.debug(f"End of bit mapping detected. (Row: {i})")
                 break
             if not line[self.tag_cell]:  # only use tagged rows
-                log.info(f"Skipping bit mapping row (no tag). (Row: {i})")
+                log.debug(f"Skipping bit mapping row (no tag). (Row: {i})")
                 continue
             tag = line[self.tag_cell]
             value = line[self.value_min_cell] or line[self.value_max_cell]
             if not value:
                 log.warning(f"No bit mapping value found in any value cell. Skipping tag '{tag}'.")
                 continue
-            log.info(f"Found bit mapping: {value} -> {tag}")
+            value = int(value)
+            log.debug(f"Found bit mapping: {value} -> {tag}")
             bit_map[value] = TagValue(
                 tag=line[self.tag_cell],
                 description=line[self.description_cell],
@@ -137,6 +167,7 @@ class RegisterLoader:
         self.add_parser(r'INT.*', IntRegisterParser())
         self.add_parser(r'DEC.*', DecimalRegisterParser())
         self.add_parser(r'BIT.*', BitRegisterParser())
+        self.add_parser(f'MAP', MapRegisterParser())
 
 
     def add_parser(self, pattern, instance) -> Self:
@@ -225,7 +256,14 @@ class RegisterLoader:
                 for pattern, parser in self.parsers.items():
                     if pattern.match(line[format_cell]):
                         register = parser.parse(lines[pos:])
-                        log.info(f'Register {number} ("{register.description}") -> Tag {register.tag} ({type(register).__qualname__}).')
+                        if isinstance(register, SimpleRegister):
+                            log.info(f'Register {number} ("{register.description}") -> Tag {register.tag} ({type(register).__qualname__}).')
+                        elif isinstance(register, BitRegister):
+                            log.info(f'Register {number} ({type(register).__qualname__})')
+                            for bit_value, tag_value in register.bit_map.items():
+                                log.info(
+                                    f"Register {number} & {bit_value} -> "
+                                    f'Tag {tag_value.tag} ("{tag_value.description}").')
                         break
 
                 if not register:
