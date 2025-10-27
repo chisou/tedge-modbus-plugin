@@ -1,0 +1,20 @@
+version: "3"
+
+configs:
+  mosquitto-config:
+    content: |
+      listener 1883
+      allow_anonymous true
+      log_type all
+      log_dest stdout
+      persistence false
+
+services:
+  mqtt:
+    image: eclipse-mosquitto
+    ports:
+      - "1883:1883"
+    configs:
+      - source: mosquitto-config
+        target: /mosquitto/config/mosquitto.conf
+    command: mosquitto -c /mosquitto/config/mosquitto.conf -v
