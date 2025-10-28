@@ -17,7 +17,7 @@ depends:
   - python3-pymodbus
 
 contents:
-  - src: ./app/*
+  - src: ./tedge_modbus/*
     dst: /usr/lib/python3/dist-packages/tedge_modbus
   - src: ./systemd/tedge-modbus-plugin.service
     dst: /lib/systemd/system/tedge-modbus-plugin.service

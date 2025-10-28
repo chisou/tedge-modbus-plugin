@@ -5,7 +5,7 @@ from enum import Enum
 from itertools import count
 from typing import Self
 
-from app.model import Register, IntRegister, DecimalRegister, BitRegister, TagValue, MapRegister, SimpleRegister
+from tedge_modbus.model import Register, IntRegister, DecimalRegister, BitRegister, TagValue, MapRegister, SimpleRegister
 
 log = logging.getLogger(__name__)
 

@@ -12,11 +12,11 @@ from itertools import chain
 from pymodbus.client import AsyncModbusTcpClient
 from setuptools.logging import configure
 
-from app.core import assemble_groups, tedge_compile, collect_data
-from app.model import Configuration
-from app.mqtt import MqttClient
-from app.parser import RegisterLoader
-from app.util import next_timestamp
+from tedge_modbus.core import assemble_groups, tedge_compile, collect_data
+from tedge_modbus.model import Configuration
+from tedge_modbus.mqtt import MqttClient
+from tedge_modbus.parser import RegisterLoader
+from tedge_modbus.util import next_timestamp
 
 # Configuration
 CONFIG_DIR = '/etc/tedge/plugins/modbus/'

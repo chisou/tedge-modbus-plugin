@@ -2,7 +2,7 @@ import json
 import logging
 from datetime import datetime
 
-from app.model import MeasurementGroup
+from tedge_modbus.model import MeasurementGroup
 
 log = logging.getLogger(__name__)
 
