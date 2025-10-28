@@ -1,0 +1,19 @@
+[modbus]
+host = "192.168.178.176"
+port = 502
+
+[tedge]
+mqtt.host = "localhost"
+mqtt.port = 1883
+
+[core]
+loop.interval = 10
+default.interval = 60
+align_timestamps = true
+
+[registers]
+csv.column.register = ["Register", "Number"]
+csv.column.size = ["Size", "Word", "Length"]
+
+[group.total]
+interval = 300

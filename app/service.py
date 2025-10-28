@@ -1,19 +1,26 @@
+import argparse
 import asyncio
 import logging
+import os
 import signal
 import time
+import tomllib
 from asyncio import Event
 from datetime import datetime, timezone
 from itertools import chain
 
 from pymodbus.client import AsyncModbusTcpClient
+from setuptools.logging import configure
 
-from app.main import assemble_groups, tedge_compile, collect_data
+from app.core import assemble_groups, tedge_compile, collect_data
+from app.model import Configuration
 from app.mqtt import MqttClient
 from app.parser import RegisterLoader
 from app.util import next_timestamp
 
 # Configuration
+CONFIG_DIR = '/etc/tedge/plugins/modbus/'
+
 MODBUS_HOST = '192.168.178.176'  # Change to your Modbus server IP
 MODBUS_PORT = 502
 MQTT_HOST = 'localhost'
@@ -26,13 +33,16 @@ logging.basicConfig(level=logging.DEBUG)
 
 async def main():
 
-    stop_event = Event()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-c", "--configdir", required=False)
+    args = parser.parse_args()
+    config_dir = os.path.abspath(args.configdir or CONFIG_DIR)
 
-    def stop():
-        log.info("Stop signal received. Shutting down ...")
-        stop_event.set()
+    configuration = None
+    with open(os.path.join(config_dir, "service.toml"), "rb") as config_file:
+        configuration = Configuration(tomllib.load(config_file))
 
-    loader = RegisterLoader('registers.csv')
+    loader = RegisterLoader(os.path.join(config_dir, 'registers.csv'))
     loader.set_columns(
         number='Register',
         size='Words',
@@ -50,11 +60,19 @@ async def main():
             for register in sequence:
                 log.info(f'     - Register {register.number}')
 
-    modbus_client = AsyncModbusTcpClient(MODBUS_HOST, port=MODBUS_PORT)
+    modbus_client = AsyncModbusTcpClient(configuration.modbus_host, port=configuration.modbus_port)
     await modbus_client.connect()
 
     mqtt_client = MqttClient(MQTT_HOST, MQTT_PORT)
     await mqtt_client.start()
+
+    # === main loop ====
+
+    stop_event = Event()
+
+    def stop():
+        log.info("Stop signal received. Shutting down ...")
+        stop_event.set()
 
     loop = asyncio.get_running_loop()
     loop.add_signal_handler(signal.SIGINT, stop)
@@ -85,11 +103,9 @@ async def main():
                     next_timestamps[group] = next_ts
                     log.info(f"Next sample: {datetime.fromtimestamp(next_ts).isoformat()}")
 
-            await asyncio.sleep(10)  # todo: MAIN_INTERVAL
+            await asyncio.wait_for(stop_event.wait(), timeout=10)
 
     finally:
         modbus_client.close()
         mqtt_client.stop()
 
-
-asyncio.run(main())

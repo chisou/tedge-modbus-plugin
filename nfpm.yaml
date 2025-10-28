@@ -1,0 +1,46 @@
+name: "tedge-modbus-plugin"
+arch: "all"
+platform: "linux"
+version: "${VERSION}"
+section: "utils"
+priority: "optional"
+maintainer: "Christoph Souris <christoph.souris@csou.de"
+description: thin-edge.io Modbus Plugin
+license: Apache License 2.0
+homepage: "https://github.com/you/myapp"
+
+depends:
+  - tedge
+  - tedge-mapper
+  - python3
+  - python3-paho-mqtt
+  - python3-pymodbus
+
+contents:
+  - src: ./app/*
+    dst: /usr/lib/python3/dist-packages/tedge_modbus
+  - src: ./systemd/tedge-modbus-plugin.service
+    dst: /lib/systemd/system/tedge-modbus-plugin.service
+    file_info:
+      mode: 0644
+      owner: root
+  - dst: /var/log/tedge-modbus-plugin
+    type: dir
+  - src: config/service.toml
+    dst: /etc/tedge/plugins/modbus/service.toml
+    type: config|noreplace
+    file_info:
+      owner: tedge
+      group: tedge
+      mode: 0644
+  - src: config/registers.csv
+    dst: /etc/tedge/plugins/modbus/registers.csv
+    type: config|noreplace
+    file_info:
+      owner: tedge
+      group: tedge
+      mode: 0644
+
+#scripts:
+#  postinstall: scripts/postinstall.sh
+#  preremove: scripts/preremove.sh

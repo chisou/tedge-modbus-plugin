@@ -1,0 +1,32 @@
+[build-system]
+requires = [
+    "hatchling",
+    "hatch-vcs",
+]
+build-backend = "hatchling.build"
+
+[project]
+name = "tedge-modbud-plugin"
+dynamic = ["version"]
+description = "MODBus plugin for thin-edge.io"
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "pymodbus"
+]
+
+[tool.hatch.build]
+include = ["app"]
+
+[tool.hatch.version]
+source = "vcs"
+
+[project.scripts]
+myapp = "app.service:main"

@@ -1,0 +1,14 @@
+[Unit]
+Description=thin-edge.io Modbus plugin
+After=network.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/bin/python3 -m tedge_modbus.service -c /etc/tedge/plugins/modbus/
+Restart=on-failure
+RestartSec=5
+Environment="PYTHONUNBUFFERED=1"
+
+[Install]
+WantedBy=multi-user.target

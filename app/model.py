@@ -1,3 +1,12 @@
+import os
+import tomllib
+
+
+class Configuration:
+    def __init__(self, config_dict):
+        self.modbus_host = config_dict["modbus"]["host"]
+        self.modbus_port = config_dict["modbus"]["port"]
+
 
 class TagValue:
     def __init__(self, tag, description, value):
