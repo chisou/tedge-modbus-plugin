@@ -1,3 +1,4 @@
 .idea
 venv
+dist
 tedge_modbus/pymodbus
