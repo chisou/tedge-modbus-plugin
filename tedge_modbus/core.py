@@ -1,6 +1,6 @@
 import json
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 
 from tedge_modbus.model import MeasurementGroup
 
@@ -81,7 +81,7 @@ async def collect_data(client, sequence):
 
 def tedge_compile(ts, group, tag_values):
     device = tag_values[0].tag.split('.')[0]
-    data = {"time": datetime.fromtimestamp(ts).isoformat()}
+    data = {"time": datetime.fromtimestamp(ts, timezone.utc).isoformat()}
     for tag_value in tag_values:
         _, l0, l1 = tag_value.tag.split('.')
         if l0 not in data:

@@ -7,6 +7,7 @@ import sys
 import time
 import tomllib
 from asyncio import Event
+from contextlib import suppress
 from datetime import datetime
 
 from pymodbus.client import AsyncModbusTcpClient
@@ -110,7 +111,8 @@ async def main():
                     next_timestamps[group] = next_ts
                     log.info(f"Next sample: {datetime.fromtimestamp(next_ts).isoformat()}")
 
-            await asyncio.wait_for(stop_event.wait(), timeout=10)
+            with suppress(TimeoutError):
+                await asyncio.wait_for(stop_event.wait(), timeout=10)
 
     finally:
         modbus_client.close()
