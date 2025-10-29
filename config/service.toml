@@ -1,6 +1,8 @@
 [modbus]
 host = "192.168.178.176"
 port = 502
+offset = 0
+byteorder = "big"
 
 [tedge]
 mqtt.host = "localhost"
@@ -14,9 +16,18 @@ loop.interval = 10
 default.interval = 60
 align_timestamps = true
 
-[registers]
-csv.column.register = ["Register", "Number"]
-csv.column.size = ["Size", "Word", "Length"]
+[csv]
+header = 0
+delimiter = ","
+quote = '"'
 
-[group.total]
-interval = 300
+[registers]
+number = ["Register", "Number"]
+size = ["Size", "Word", "Length"]
+type = ["Type", "Format"]
+uom = ["UOM", "Unit"]
+min = ["Min", "Val"]
+max = ["Max"]
+description = ["Desc", "De", "Ger", "En", "Fr"]
+tag = ["Tag", "Target", "Map"]
+group = ["Group", "Dev", "Set", "Target"]

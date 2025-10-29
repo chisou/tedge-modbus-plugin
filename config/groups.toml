@@ -1,0 +1,5 @@
+[default]
+interval = 60
+
+[total]
+interval = 300

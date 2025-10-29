@@ -10,6 +10,8 @@ class Configuration:
         self.mqtt_host = config_dict["tedge"]["mqtt"]["host"]
         self.mqtt_port = config_dict["tedge"]["mqtt"]["port"]
 
+        self.register_mappings = config_dict["registers"]
+
 
 class TagValue:
     def __init__(self, tag, description, value):
@@ -70,7 +72,7 @@ class MapRegister(SimpleRegister):
         self.value_map = value_map
 
     def _parse(self, value):
-        return self.value_map.get(self.value_parser(value), None)
+        return self.value_map.get(self.value_parser(value), -1)
 
 
 class BitRegister(Register):

@@ -86,14 +86,14 @@ class MapRegisterParser(RegisterParser):
 
     def parse(self, lines):
         spec = lines[0]
-        value_parser = int
+        value_parser = int  # TODO: in a map, only integers seem sensible?
         value_map = {}
         for i in count(1):
             line = lines[i]
             if line[self.number_cell]:  # assume that bitmap lines don't have number
                 log.debug(f"End of mapping detected. (Row: {i})")
                 break
-            value = line[self.value_min_cell] or line[self.value_max_cell]
+            value = value_parser(line[self.value_min_cell] or line[self.value_max_cell])
             if not value:
                 log.warning(f"No mapping value found in any value cell. (Row: {i})")
                 continue
@@ -150,21 +150,12 @@ class BitRegisterParser(RegisterParser):
 
 class RegisterLoader:
 
-    Column = Enum(
-        'Column',
-        'NUMBER_COLUMN '
-        'SIZE_COLUMN '
-        'FORMAT_COLUMN '
-        'VALUE_MIN_COLUMN '
-        'VALUE_MAX_COLUMN '
-        'UOM_COLUMN TAG_COLUMN '
-        'DESCRIPTION_COLUMN'
-    )
-
-    def __init__(self, csv_file):
+    def __init__(self, csv_file, ignore_case, delimiter, quote_char, header):
         self.csv_file = csv_file
-        self.skip_header = False
-        self.ignore_case = True
+        self.header_row = header or 0
+        self.delimiter = delimiter
+        self.quote_char = quote_char
+        self.ignore_case = ignore_case if ignore_case is not None else True
         self.parsers = {}
 
         # default column names
@@ -183,7 +174,7 @@ class RegisterLoader:
         self.add_parser(r'INT.*', IntRegisterParser())
         self.add_parser(r'DEC.*', DecimalRegisterParser())
         self.add_parser(r'BIT.*', BitRegisterParser())
-        self.add_parser(f'MAP', MapRegisterParser())
+        self.add_parser(f'MAP.*', MapRegisterParser())
 
 
     def add_parser(self, pattern, instance) -> Self:
@@ -219,7 +210,7 @@ class RegisterLoader:
     def load_registers(self):
 
         with open(self.csv_file) as csv_file:
-            lines = list(csv.reader(csv_file))
+            lines = list(csv.reader(csv_file, delimiter=))
 
             # get column names and cell positions
             headers = {value: i for i, value in enumerate(lines[0])}
