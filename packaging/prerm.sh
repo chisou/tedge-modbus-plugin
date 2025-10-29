@@ -2,7 +2,7 @@
 
 set -e
 
-SERVICE=tedge-modbus-service
+SERVICE=tedge-modbus-plugin
 
 if [ "$1" = "remove" ]; then
   if command -v systemctl >/dev/null 2>&1; then
