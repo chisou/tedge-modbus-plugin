@@ -19,7 +19,7 @@ depends:
 contents:
   - src: ./tedge_modbus/*
     dst: /usr/lib/python3/dist-packages/tedge_modbus
-  - src: ./systemd/tedge-modbus-plugin.service
+  - src: ./packaging/tedge-modbus-plugin.service
     dst: /lib/systemd/system/tedge-modbus-plugin.service
     file_info:
       mode: 0644
@@ -41,6 +41,6 @@ contents:
       group: tedge
       mode: 0644
 
-#scripts:
-#  postinstall: scripts/postinstall.sh
-#  preremove: scripts/preremove.sh
+scripts:
+  postinstall: packaging/postinst.sh
+  preremove: packaging/prerm.sh

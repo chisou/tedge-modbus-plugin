@@ -6,9 +6,13 @@ After=network.target
 Type=simple
 User=root
 ExecStart=/usr/bin/python3 -m tedge_modbus.service -c /etc/tedge/plugins/modbus/
+Environment="PYTHONUNBUFFERED=1"
+
 Restart=on-failure
 RestartSec=5
-Environment="PYTHONUNBUFFERED=1"
+
+StandardOutput=inherit
+StandardError=inherit
 
 [Install]
 WantedBy=multi-user.target
