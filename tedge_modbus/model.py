@@ -84,7 +84,7 @@ class BitRegister(Register):
             TagValue(
                 tag_value.tag,
                 tag_value.description,
-                value=int(value) & bit_value > 0,
+                value=int(int(value) & bit_value > 0),
             )
             for bit_value, tag_value in self.bit_map.items()
         )
