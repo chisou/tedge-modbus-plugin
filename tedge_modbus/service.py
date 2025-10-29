@@ -7,11 +7,9 @@ import sys
 import time
 import tomllib
 from asyncio import Event
-from datetime import datetime, timezone
-from itertools import chain
+from datetime import datetime
 
 from pymodbus.client import AsyncModbusTcpClient
-from setuptools.logging import configure
 
 from tedge_modbus.core import assemble_groups, tedge_compile, collect_data
 from tedge_modbus.model import Configuration
