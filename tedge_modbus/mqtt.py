@@ -14,7 +14,6 @@ class MqttClient:
         self.client = mqtt.Client(
             clean_session=True,
             reconnect_on_failure=True,
-            manual_ack=False,
         )
 
     async def start(self):
