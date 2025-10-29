@@ -4,8 +4,11 @@ import tomllib
 
 class Configuration:
     def __init__(self, config_dict):
+        self.log_level = config_dict["logging"]["level"]
         self.modbus_host = config_dict["modbus"]["host"]
         self.modbus_port = config_dict["modbus"]["port"]
+        self.mqtt_host = config_dict["tedge"]["mqtt"]["host"]
+        self.mqtt_port = config_dict["tedge"]["mqtt"]["port"]
 
 
 class TagValue:

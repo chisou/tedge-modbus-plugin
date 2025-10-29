@@ -6,6 +6,9 @@ port = 502
 mqtt.host = "localhost"
 mqtt.port = 1883
 
+[logging]
+level = "DEBUG"
+
 [core]
 loop.interval = 10
 default.interval = 60

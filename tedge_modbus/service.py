@@ -3,6 +3,7 @@ import asyncio
 import logging
 import os
 import signal
+import sys
 import time
 import tomllib
 from asyncio import Event
@@ -20,9 +21,9 @@ from tedge_modbus.util import next_timestamp
 
 # Configuration
 CONFIG_DIR = '/etc/tedge/plugins/modbus/'
+LOG_FORMAT = '%(asctime)s [%(levelname)s] %(name)s:%(lineno)d — %(message)s'
+DATE_FORMAT = "%Y-%m-%dT%H:%M:%S%z"
 
-MODBUS_HOST = '192.168.178.176'  # Change to your Modbus server IP
-MODBUS_PORT = 502
 MQTT_HOST = 'localhost'
 MQTT_PORT = 1883
 
@@ -41,6 +42,14 @@ async def main():
     configuration = None
     with open(os.path.join(config_dir, "service.toml"), "rb") as config_file:
         configuration = Configuration(tomllib.load(config_file))
+
+    logging.basicConfig(
+        level=configuration.log_level,
+        format=LOG_FORMAT,
+        datefmt=DATE_FORMAT,
+        handlers=[logging.StreamHandler(sys.stdout)],
+        force=True,
+    )
 
     loader = RegisterLoader(os.path.join(config_dir, 'registers.csv'))
     loader.set_columns(
