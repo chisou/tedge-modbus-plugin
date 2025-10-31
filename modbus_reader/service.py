@@ -12,11 +12,11 @@ from datetime import datetime
 
 from pymodbus.client import AsyncModbusTcpClient
 
-from tedge_modbus.core import assemble_groups, tedge_compile, collect_data
-from tedge_modbus.model import Configuration
-from tedge_modbus.mqtt import MqttClient
-from tedge_modbus.parser import RegisterLoader
-from tedge_modbus.util import next_timestamp
+from modbus_reader.config import Configuration
+from modbus_reader.core import assemble_groups, tedge_compile, collect_data
+from modbus_reader.mqtt import MqttClient
+from modbus_reader.parser import RegisterLoader, CsvParser
+from modbus_reader.util import next_timestamp
 
 # Configuration
 CONFIG_DIR = '/etc/tedge/plugins/modbus/'
@@ -33,30 +33,46 @@ logging.basicConfig(level=logging.DEBUG)
 
 async def main():
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-c", "--configdir", required=False)
-    args = parser.parse_args()
+    arg_parser = argparse.ArgumentParser()
+    arg_parser.add_argument("-c", "--configdir", required=False)
+    args = arg_parser.parse_args()
+
+    # init configuration
     config_dir = os.path.abspath(args.configdir or CONFIG_DIR)
+    configuration = Configuration(config_dir)
 
-    configuration = None
-    with open(os.path.join(config_dir, "service.toml"), "rb") as config_file:
-        configuration = Configuration(tomllib.load(config_file))
-
+    # init logging
     logging.basicConfig(
-        level=configuration.log_level,
-        format=LOG_FORMAT,
         datefmt=DATE_FORMAT,
+        format=LOG_FORMAT,
+        level=configuration.logging.level,
         handlers=[logging.StreamHandler(sys.stdout)],
         force=True,
     )
 
-    loader = RegisterLoader(os.path.join(config_dir, 'registers.csv'))
-    loader.set_columns(
-        number='Register',
-        size='Words',
-        description='English',
+    # read registers
+    file_parser = CsvParser(
+        delimiter=configuration.csv.delimiter,
+        quote_char=configuration.csv.quote,
+        skip_lines=0
     )
-    registers = loader.load_registers()
+    loader = RegisterLoader()
+    loader.set_columns(
+        number=configuration.mapping.registers.number,
+        size=configuration.mapping.registers.size,
+        type=configuration.mapping.registers.type,
+        uom=configuration.mapping.registers.uom,
+        value=configuration.mapping.registers.value,
+        min=configuration.mapping.registers.min,
+        max=configuration.mapping.registers.max,
+        tag=configuration.mapping.registers.tag,
+        description=configuration.mapping.registers.description,
+        device=configuration.mapping.registers.device,
+        group=configuration.mapping.registers.group,
+    )
+
+    with open(os.path.join(config_dir, 'registers.csv')) as csv_file:
+        registers = loader.load_from_lines(file_parser.read_lines(csv_file))
     log.info(f"Found {len(registers)} register definitions.")
 
     groups = assemble_groups(registers)

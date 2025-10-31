@@ -2,7 +2,7 @@ import json
 import logging
 from datetime import datetime, timezone
 
-from tedge_modbus.model import MeasurementGroup
+from modbus_reader.model import MeasurementGroup
 
 log = logging.getLogger(__name__)
 
@@ -11,11 +11,11 @@ def assemble_groups(registers):
     sequences = []
     chunk = [registers[0]]
     previous = registers[0]
-    stop = False
+    stop = ""
     for register in registers[1:]:
 
         if len(chunk) == 1:
-            log.info(f"Starting sequence: {chunk[0].number}")
+            log.info(f"Starting sequence: {previous.number}, Group: {previous.group}")
 
         # the chunk list now contains all valid registers, we only have to
         # check whether the current register would also be fitting
@@ -25,19 +25,22 @@ def assemble_groups(registers):
         elif previous.number + previous.size != register.number:
             log.info(f"Stopping sequence: Not sequential ({register.number}).")
             stop = True
+        elif previous.group != register.group:
+            log.info(f"Stopping sequence: Group differs ({register.group}).")
+            stop = True
 
         if not stop:
-            log.info(f"Adding to sequence: {register.number}, Size {register.size}")
+            log.debug(f"Adding to sequence: {register.number}")
             chunk.append(register)
         else:
-            log.info(f"Adding sequence: {chunk[0].number} - {chunk[-1].number}")
+            log.info(f"Found register sequence: {chunk[0].number} - {chunk[-1].number}")
             sequences.append(chunk)
             chunk = [register]
             stop = False
 
         previous = register
 
-    log.info(f"Final sequence: {chunk[0].number} - {chunk[-1].number}")
+    log.info(f"Found final sequence: {chunk[0].number} - {chunk[-1].number}")
     sequences.append(chunk)
 
     # order sequences by their group

@@ -20,14 +20,3 @@ align_timestamps = true
 header = 0
 delimiter = ","
 quote = '"'
-
-[registers]
-number = ["Register", "Number"]
-size = ["Size", "Word", "Length"]
-type = ["Type", "Format"]
-uom = ["UOM", "Unit"]
-min = ["Min", "Val"]
-max = ["Max"]
-description = ["Desc", "De", "Ger", "En", "Fr"]
-tag = ["Tag", "Target", "Map"]
-group = ["Group", "Dev", "Set", "Target"]

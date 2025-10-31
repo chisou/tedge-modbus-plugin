@@ -1,194 +1,194 @@
-Register,Words,Offset,UOM,Format,Min,Max,German,English,French,Tag,Group,Interval
-40000,2,0,°C,DECIMAL 1,0,120,Kesseltemperatur,Boiler temperature,Température chaudière,main.boilerTemperature.actual,boiler,60
-40002,2,0,°C,DECIMAL 1,0,120,Bedarfstemperatur,Required temperature,Température nécessaire,main.boilerTemperature.target,boiler,60
-40004,2,0,,MAP INT,,,Kesselstatus,Boiler status,Statut chaudière,main.boilerStatus.actual,boiler,60
-,,,,,0,,Nach Reset,After reset,Après Reset,,,
-,,,,,1,,Heizung Aus,Heating off,Arrêt chaudière,,,
-,,,,,2,,Bereit,Ready,Prêt,,,
-,,,,,3,,Zündvorbereiten,Prepare ignition,Préparation allumage,,,
-,,,,,4,,Vorbelüften,Pre-ventilate,Pré-ventilation,,,
-,,,,,5,,Kaltstart,Cold start,Démarrage à froid,,,
-,,,,,6,,Anbrennphase,Scorch phase,Début de combustion,,,
-,,,,,7,,Hochlaufphase,Run up phase,Montée en température,,,
-,,,,,8,,Regelphase,Control phase,Phase de régulation,,,
-,,,,,9,,Ausbrennphase,Burn out phase,Fin de combustion,,,
-,,,,,10,,Kaminkehrfunktion,Chimney sweeper mode,Fonction ramonage,,,
-,,,,,11,,Lambdakalibrierung,Lambda calibration,Calibrage Lambda,,,
-,,,,,12,,Saugen,Aspirate mode,Aspiration,,,
-,,,,,13,,Brennerreinigung,Burner cleaning,Nettoyage brûleur,,,
-,,,,,14,,Zündphase,Ignition phase,Phase allumage,,,
-,,,,,15,,Neuanlauf,Restart,Relance,,,
-,,,,,16,,Nachheizen,Reheat,Recharge,,,
-,,,,,17,,Warmstart,Warm start,Démarrage à chaud,,,
-,,,,,18,,Warten,Wait,Attendre,,,
-40006,2,0,%,DECIMAL 1,0,100,Kesselleistung,Boiler power,Puissance chaudière,main.boilerPower.actual,boiler,60
-40008,2,0,°C,DECIMAL 1,0,120,Rücklauf-Ist,Back flow-actual,Température de retour,main.backflowTemperature.current,boiler,60
-40010,2,0,°C,DECIMAL 1,0,120,Rücklauf-Soll,Back flow-must,Consigne température retour,main.backflowTemperature.target,boiler,60
-40012,2,0,°C,DECIMAL 1,0,600,Abgastemperatur,Flue gas temperature,Température fumées,main.flueGasTemperature.actual,boiler,60
-40014,2,0,°C,DECIMAL 1,0,1300,Feuerraumtemperatur,Burning chamber temp.,Température foyer,main.chamberTemperature.actual,boiler,60
-40016,2,0,°C,DECIMAL 1,0,120,Stokertemperatur,Stoker temperature,Température vis alimentation,main.stokerTemperature.actual,boiler,60
-40018,2,0,%,DECIMAL 1,0,100,Saugzug,ID fan,Ventilateur fumées,main.idFan.actual,boiler,60
-40020,2,0,%,DECIMAL 1,0,100,Sekundärluftklappe,Secondary air flap,Clapet air secondaire,,,
-40022,2,0,%,DECIMAL 1,0,100,Drehzahl-Ist,Rotation speed-act.,Régime ventilateur fumées,,,
-40024,2,0,%,DECIMAL 1,0,100,Drehzahl-Soll,Rotation speed-must,Consigne régime ventilateur fumées,,,
-40026,2,0,%,DECIMAL 1,0,21,O2 Ist,O2-actual,Valeur O2,main.o2.actual,boiler,60
-40028,2,0,%,DECIMAL 1,5,13,O2 Soll,O2-must,Consigne O2,main.o2.target,boiler,60
-40030,2,0,%,DECIMAL 1,0,21,CO2 Ist,CO2-actual,Valeur CO2,main.co2.actual,boiler,60
-40032,2,0,%,DECIMAL 1,5,13,CO2 Soll,CO2-must,Consigne CO2,main.co2.target,boiler,60
-40034,2,0,,BIT,,,,,,MULTIPLE,boiler,60
-,,,,,1,,Zündung Heizung,Ignition heating,Résistance allumeur,main.flag.ignitionHeating,,
-,,,,,2,,Saugturbine / Vorschubrost,Pellets suction / Pusher grate,Turbine aspiration / Grille mobile,main.flag.pusherGrate,,
-,,,,,4,,Rostreinigung,Grate cleaning,Nettoyage grille,main.flag.grateCleaning,,
-,,,,,8,,WTR,Heatexchanger cleaning,Nettoyage échangeur,main.flag.heatExchangerCleaning,,
-,,,,,16,,Zündung Ventilator,Ignition fan,Ventilateur allumeur,main.flag.ignitionFan,,
-,,,,,32,,Austragschnecke,Discharge screw,Vis extraction,main.flag.dischargeScrew,,
-,,,,,64,,RSE Auf,BFP open,Clapet RSE ouvert,main.flag.backFireProtectionOpen,,
-,,,,,128,,AAT / Behälterschnecke,Ash screw,Décendrage foyer / vis réservoir,main.flat.ashScrew,,
-40036,2,0,,BIT,0,,,,,MULTIPLE,boiler,60
-,,,,,1,,Magnetventil / Abgaswärmetauscher,Magnetic valve,Electrovanne / Echangeur condensation,,,
-,,,,,2,,AAT (PS CONDENSATION 80-101),Ash screw (PS CONDENSATION 80-101),Décendrage (PS CONDENSATION 80-101),,,
-,,,,,4,,Rücklaufpumpe,Back flow pump,Pompe retour,main.flag.backFlowPump,,
-,,,,,8,,Rücklaufmischer AUF,Back flow mixer open,Mélangeur retour ouvre,main.flat.backFlowMixerOpen,,
-,,,,,16,,Rücklaufmischer ZU,Back flow mixer close,Mélangeur retour ferme,main.flat.backFlowMixerClosed,,
-,,,,,32,,nicht verwendet,not used,Non utilisé,,,
-,,,,,64,,Alarmausgang,Sum annoyance,Sortie alarme,,,
-,,,,,128,,TÜB,Output temperature control,Surveillance température silo,,,
-40038,2,0,,BIT,0,,,,,MULTIPLE,boiler,60
-,,,,,1,,Betriebsmelder,Operating alarm unit,Contact de marche,,,
-,,,,,2,,Freigabe Einschubschnecke,Release of the stoker screw,Libération vis alimentation,,,
-,,,,,4,,Lambdaheizung,Lambda heating,Chauffe Lambda,main.flag.lambdaHeating,,
-,,,,,8,,nicht verwendet,not used,Non utilisé,,,
-,,,,,16,,nicht verwendet,not used,Non utilisé,,,
-,,,,,32,,nicht verwendet,not used,Non utilisé,,,
-,,,,,64,,nicht verwendet,not used,Non utilisé,,,
-,,,,,128,,Einschubschnecke,Stoker screw,Vis alimentation,main.flag.stokerScrew,,
-40040,2,0,,BIT,0,,,,,MULTIPLE,boiler,60
-,,,,,1,,Anlage Halt,Burner stop,Arrêt brûleur,,,
-,,,,,2,,TÜB,Temp. control storage room,Surveillance température silo,,,
-,,,,,4,,RSE offen,BFP open,Clapet RSE ouvert,main.flag.rseOpen2,,
-,,,,,8,,RSE geschlossen,BFP closed,Clapet RSE fermé,main.flag.rseClosed,,
-,,,,,16,,Motorschutz AS,Motor prot. discharge screw,Disjoncteur moteur extraction,,,
-,,,,,32,,Aschentür ZU / Brennraumtür ZU,Burning chamber door/ash door opened,Porte cendrier dermée / Porte foyer fermée,main.flag.chamberDoor,,
-,,,,,64,,Endschalter AS,Endswitch room discharge,Contacteur bourrage vis extraction,,,
-,,,,,128,,Zusatzeingang,Additional input,Entrée supplémentaire,,,
-40042,2,0,,BIT,0,,,,,,,
-,,,,,1,,AAT-Überwachung (PS CONDENSATION 80-101),Ashscrew controlling (PS CONDENSATION 80-101),Contrôle décendrage (PS CONDENSATION 80-101),VARIOUS,boiler,60
-,,,,,2,,Behälter leer,Tank empty,Réservoir vide,,,
-,,,,,4,,Rost geschlossen,Grate closed,Grille fermée,,,
-,,,,,8,,Vacutransklappe / AAT-Überwachung,Vacutrans flap / Ashscrew controlling,Clapet d'aspiration / Contrôle décendrage,,,
-,,,,,16,,Fehler ZAAT,Fault centr. ash sys.,Défaut décendrage centralisé,,,
-,,,,,32,,STB,STC,STB,,,
-,,,,,64,,nicht verwendet,not used,Non utilisé,,,
-,,,,,128,,nicht verwendet,not used,Non utilisé,,,
-40044,2,0,h,INT,0,4294967296,Nennlast,Nominal load,Puissance nominale,main.boilerStatus.nominalTime,total,3600
-40046,2,0,h,INT,0,4294967296,Modulation,Modulation,Modulation,,,
-40048,2,0,h,INT,0,4294967296,Teillast,Part load,Puissance minimale,,,
-40050,2,0,h,INT,0,4294967296,An-/Ausbrennen,Scorch- /burn out,Début/Fin de combustion,main.boilerStatus.partTime,total,3600
-40052,2,0,h,INT,0,4294967296,Kessellaufzeit,Boiler run time,Durée fonctionnement chaudière,main.boilerStatus.runTime,total,3600
-40054,2,0,h,INT,0,4294967296,Gesamt,Total,Ensemble,main.boilerStatus.totalTime,total,3600
-40080,2,0,,MAP,0,4,,,,,,
-,,,,,0,,-,-,-,,,
-,,,,,1,,Fehler,Error,Défaut,,,
-,,,,,2,,nicht angewählt,Not selected,Non sélectionné,,,
-,,,,,4,,Kessel,Boiler,Chaudière,,,
-40082,2,0,%,DECIMAL 1,0,100,Aktivität Rost,Activity Grate,Activité grille,,,
-40084,2,0,%,DECIMAL 1,0,100,Aktivität Beschickung,Activity Feed,Activité alimentation,,,
-40086,2,0,Pa,DECIMAL 1,0,300,Unterdruck,Under pressure,Dépression,,,
-40088,2,0,Pa,DECIMAL 1,0,300,Unterdruck-Soll,Under pressure must,Consigne dépression,,,
-40090,2,2,%,DECIMAL 1,30,100,Max.Kesselleistung,Boiler power max.,Puissance chaudière max.,,,
-40094,2,0,%,DECIMAL 1,0,100,RL-Pumpe PWM,Back flow pump PWM,Pompe retour PWM,,,
-40096,2,0,%,DECIMAL 1,0,100,Rauchgasrezirkulation,Flue gas recirculation,Recirculation fumées,,,
-,,,,,,,,,,,,
-,,,,,,,Puffer,,,,,
-41000,2,,,MAP INT,0,17,Statusbyte,-,-,,,
-,,,,,1,,Fehler,Error,Défaut,,,
-,,,,,2,,nicht angewählt,Not selected,Non sélectionné,,,
-,,,,,3,,Kesselhaus,Boiler room,Chaufferie,,,
-,,,,,4,,Kessel,Boiler,Chaudière,,,
-,,,,,5,,Haus,House,Maison,,,
-,,,,,6,,Terminal,Terminal,Terminal,,,
-,,,,,7,,Vrnet,Vrnet,Vrnet,,,
-,,,,,8,,Puffer,Buffer,Accumulateur,,,
-,,,,,9,,Boiler,Hot water tank,Boiler / ECS,,,
-,,,,,10,,Heizkreis,Heating circuit,Circuit de chauffage,,,
-,,,,,11,,Solar,Solar,Solaire,,,
-,,,,,12,,Weiche,Hydraulic compensator,Découplage hydraulique,,,
-,,,,,13,,Netzpumpe,Net pump,Pompe réseau,,,
-,,,,,14,,Zusatzkessel,Additional boiler,Chaudière auxiliaire,,,
-,,,,,15,,Zonenventil,Zone valve,Vanne sectorielle,,,
-,,,,,16,,Externe Anforderung,External demand,Demande externe,,,
-,,,,,17,,Zeitbetrieb,Time mode,Mode horaire,,,
-41002,2,,°C,DECIMAL 1,-50,160,Puffer-Oben-Ist,Buffer top actual,Accumulateur haut est,buffer.temperatureTop.actual,buffer,300
-41004,2,,°C,DECIMAL 1,-50,160,Puffer-Unten-Ist,Buffer bottom actual,Accumulateur bas est,buffer.temperatureBottom.actual,buffer,300
-41006,2,,°C,DECIMAL 1,-50,160,Aussentemperatur,Outside temperature,Température extérieure,buffer.temperatureOutside.actual,buffer,300
-41008,2,,°C,DECIMAL 1,-50,160,Puffer-Mitte-Ist,Buffer middle actual,Accumulateur milieu est,buffer.temperatureMiddle.actual,buffer,300
-41010,,,,,,,nicht verwendet,not used,Non utilisé,,,
-41012,2,,,BIT,0,4294967296,Ein-/Ausgänge,In-/Outputs,Entrées / Sorties,VARIOUS,buffer,300
-,,,,extern,1,,Pufferladepumpe,Buffer loading pump,Pompe de charge accumulateur,buffer.flag.loadingPumpExtern,,
-,,,,extern,2,,Schnellaufheizung AUF,Fastrun open,Chauffe rapide ouvert,,,
-,,,,extern,4,,Schnellaufheizung ZU,Fastrun close,Chauffe rapide fermé,,,
-,,,,extern,8,,nicht verwendet,not used,Non utilisé,,,
-,,,,intern,1,,Schnellaufheizung AUF,Fastrun open,Chauffe rapide ouvert,buffer.flag.loadingPumpIntern,,
-,,,,intern,2,,Schnellaufheizung ZU,Fastrun close,Chauffe rapide fermé,,,
-,,,,intern,4,,Pufferladepumpe,Buffer loading pump,Pompe de charge accumulateur,,,
-,,,,intern,8,,nicht verwendet,not used,Non utilisé,,,
-41014,2,,°C,1,0,120,Bedarfstemperatur,Required temperature,Température nécesaire,buffer.temperature.required,buffer,300
-41016,2,,°C,1,0,90,Puffer-Soll,Must temperature,Consigne accumulateur,buffer.temperature.target,buffer,300
-41018,2,,°C,1,-50,50,Tagesmittel-Ist,Day middle switching temperature,Moyenne jour est,buffer.switchTemperature.actual,buffer,300
-41020,2,,°C,1,0,90,geforderte Temperatur,Required temperature,Température requise,buffer.temperature.minimum,buffer,300
-41022,,,,,,,nicht verwendet,not used,Non utilisé,,,
-41024,,,,,,,nicht verwendet,not used,Non utilisé,,,
-41026,2,,,0,0,1,Sperrzeit aktiv,Barrier times active,Périodes verrouillés actif,,,
-41028,,,,,,,nicht verwendet,not used,Non utilisé,,,
-41030,,,,,,,nicht verwendet,not used,Non utilisé,,,
-41032,,,,,,,nicht verwendet,not used,Non utilisé,,,
-41034,,,,,,,nicht verwendet,not used,Non utilisé,,,
-41036,,,,,,,nicht verwendet,not used,Non utilisé,,,
-41038,,,,,,,nicht verwendet,not used,Non utilisé,,,
-,,,,,,,,,,,,
-,,,,,,,Heizkreis,,,,,
-41040,2,,Statusbyte,,0,17,,,,,,
-,,,,,1,,Fehler,Error,Défaut,,,
-,,,,,2,,nicht angewählt,Not selected,Non sélectionné,,,
-,,,,,3,,Kesselhaus,Boiler room,Chaufferie,,,
-,,,,,4,,Kessel,Boiler,Chaudière,,,
-,,,,,5,,Haus,House,Maison,,,
-,,,,,6,,Terminal,Terminal,Terminal,,,
-,,,,,7,,Vrnet,Vrnet,Vrnet,,,
-,,,,,8,,Puffer,Buffer,Accumulateur,,,
-,,,,,9,,Boiler,Hot water tank,Boiler / ECS,,,
-,,,,,10,,Heizkreis,Heating circuit,Circuit de chauffage,,,
-,,,,,11,,Solar,Solar,Solaire,,,
-,,,,,12,,Weiche,Hydraulic compensator,Découplage hydraulique,,,
-,,,,,13,,Netzpumpe,Net pump,Pompe réseau,,,
-,,,,,14,,Zusatzkessel,Additional boiler,Chaudière auxiliaire,,,
-,,,,,15,,Zonenventil,Zone valve,Vanne sectorielle,,,
-,,,,,16,,Externe Anforderung,External demand,Consigne externe,,,
-,,,,,17,,Zeitbetrieb,Time mode,Mode horaire,,,
-41042,2,,°C,DECIMAL 1,-50,160,Vorlauf-Ist,Flow-actual,Départ est,heating1.flow.actual,heating1,300
-41044,2,,°C,DECIMAL 1,-50,160,Rücklauf-Ist,Back flow-actual,Retour est,heating1.backFlow.actual,heating1,300
-41046,2,,°C,DECIMAL 1,-50,160,Aussentemperatur,Outside temperature,Température extérieure,heating1.outsideTemperature.actual,heating1,300
-41048,2,,°C,DECIMAL 1,-50,160,RaumIst vom Modul,Room actual temp. from module,Température ambiante par module,heating1.roomTemerature.actual,heating1,300
-41050,2,,°C,DECIMAL 1,-50,160,RaumKorr vom Modul,Room correction from module,Correction température ambiante par module,heating1.roomTemerature.corrected,heating1,300
-41052,2,,Compound,BIT,0,4294967296,Ein-/Ausgänge,In-/Outputs,Entrées / sorties,,,
-,,,,Extern,1,,Pumpe,Pump,Pompe,,,
-,,,,,2,,Mischer AUF,Mixer open,Mélangeur ouvert,,,
-,,,,,4,,Mischer ZU,Mixer close,Melangeur fermé,,,
-,,,,,8,,nicht verwendet,not used,Non utilisé,,,
-,,,,Intern,1,,Mischer AUF,Mixer open,Mélangeur ouvert,heating1.flag.mixerOpen,heating1,300
-,,,,,2,,Mischer ZU,Mixer close,Mélangeur fermé,heating1.flag.mixerClosed,heating1,300
-,,,,,4,,Pumpe,Pump,Pompe,heating1.flag.pump,heating1,300
-,,,,,8,,nicht verwendet,not used,Non utilisé,,,
-41054,2,,°C,1,0,120,Bedarfstemperatur,Required temperature,Température nécessaire,,,
-41056,2,,°C,1,0,90,Vorlauf-Soll,Flow must,Consigne départ,heating1.flow.target,heating1,300
-41058,2,,°C,1,-50,50,Tagesmittel-Ist,Day middle switching temperature,Moyenne jour est,heating1.dayMiddleTemperature.actual,heating1,300
-41060,2,,°C,1,5,40,RaumSoll inkl. RaumKorr,Room must temp. incl. Room correction,Consigne ambiance avec correction ambiance,,,
-41062,2,,,,,,nicht verwendet,not used,Non utilisé,,,
-41064,2,,°C,1,100,950,Vorlaufsolltemperatur via ModBus,Flow must via modbus,Consigne départ via modbus,,,
-41066,2,,,0,0,1,Sperrzeit aktiv,Barrier times active,Périodes verrouillés actif,,,
-41068,2,,,,,,nicht verwendet,not used,Non utilisé,,,
-41070,2,,,,,,nicht verwendet,not used,Non utilisé,,,
-41072,2,,,,,,nicht verwendet,not used,Non utilisé,,,
-41074,2,,,,,,nicht verwendet,not used,Non utilisé,,,
-41076,2,,,,,,nicht verwendet,not used,Non utilisé,,,
-41078,2,,,,,,nicht verwendet,not used,Non utilisé,,,
+Register,Words,Offset,UOM,Format,Min,Max,German,English,French,Tag,Group
+40000,2,0,°C,DEC 1,0,120,Kesseltemperatur,Boiler temperature,Température chaudière,boiler.temp_actual,boiler
+40002,2,0,°C,DEC 1,0,120,Bedarfstemperatur,Required temperature,Température nécessaire,boiler.temp_required,boiler
+40004,2,0,,MAP INT,,,Kesselstatus,Boiler status,Statut chaudière,boiler.status,boiler
+,,,,,0,,Nach Reset,After reset,Après Reset,,
+,,,,,1,,Heizung Aus,Heating off,Arrêt chaudière,,
+,,,,,2,,Bereit,Ready,Prêt,,
+,,,,,3,,Zündvorbereiten,Prepare ignition,Préparation allumage,,
+,,,,,4,,Vorbelüften,Pre-ventilate,Pré-ventilation,,
+,,,,,5,,Kaltstart,Cold start,Démarrage à froid,,
+,,,,,6,,Anbrennphase,Scorch phase,Début de combustion,,
+,,,,,7,,Hochlaufphase,Run up phase,Montée en température,,
+,,,,,8,,Regelphase,Control phase,Phase de régulation,,
+,,,,,9,,Ausbrennphase,Burn out phase,Fin de combustion,,
+,,,,,10,,Kaminkehrfunktion,Chimney sweeper mode,Fonction ramonage,,
+,,,,,11,,Lambdakalibrierung,Lambda calibration,Calibrage Lambda,,
+,,,,,12,,Saugen,Aspirate mode,Aspiration,,
+,,,,,13,,Brennerreinigung,Burner cleaning,Nettoyage brûleur,,
+,,,,,14,,Zündphase,Ignition phase,Phase allumage,,
+,,,,,15,,Neuanlauf,Restart,Relance,,
+,,,,,16,,Nachheizen,Reheat,Recharge,,
+,,,,,17,,Warmstart,Warm start,Démarrage à chaud,,
+,,,,,18,,Warten,Wait,Attendre,,
+40006,2,0,%,DEC 1,0,100,Kesselleistung,Boiler power,Puissance chaudière,boiler.boiler_actual,boiler
+40008,2,0,°C,DEC 1,0,120,Rücklauf-Ist,Back flow-actual,Température de retour,boiler.temp_backFlow_actual,boiler
+40010,2,0,°C,DEC 1,0,120,Rücklauf-Soll,Back flow-must,Consigne température retour,boiler.temp_backFlow_target,boiler
+40012,2,0,°C,DEC 1,0,600,Abgastemperatur,Flue gas temperature,Température fumées,boiler.temp_flueGas_actual,boiler
+40014,2,0,°C,DEC 1,0,1300,Feuerraumtemperatur,Burning chamber temp.,Température foyer,boiler.temp_chamber_actual,boiler
+40016,2,0,°C,DEC 1,0,120,Stokertemperatur,Stoker temperature,Température vis alimentation,boiler.temp_stoker_actual,boiler
+40018,2,0,%,DEC 1,0,100,Saugzug,ID fan,Ventilateur fumées,boiler.rate_idFan_actual,boiler
+40020,2,0,%,DEC 1,0,100,Sekundärluftklappe,Secondary air flap,Clapet air secondaire,,
+40022,2,0,%,DEC 1,0,100,Drehzahl-Ist,Rotation speed-act.,Régime ventilateur fumées,,
+40024,2,0,%,DEC 1,0,100,Drehzahl-Soll,Rotation speed-must,Consigne régime ventilateur fumées,,
+40026,2,0,%,DEC 1,0,21,O2 Ist,O2-actual,Valeur O2,boiler.o2_actual,boiler
+40028,2,0,%,DEC 1,5,13,O2 Soll,O2-must,Consigne O2,boiler.o2_target,boiler
+40030,2,0,%,DEC 1,0,21,CO2 Ist,CO2-actual,Valeur CO2,boiler.co2_actual,boiler
+40032,2,0,%,DEC 1,5,13,CO2 Soll,CO2-must,Consigne CO2,boiler.co2_target,boiler
+40034,2,0,,BIT,,,,,,MULTIPLE,boiler
+,,,,,1,,Zündung Heizung,Ignition heating,Résistance allumeur,boiler.flag_ignitionHeating,
+,,,,,2,,Saugturbine / Vorschubrost,Pellets suction / Pusher grate,Turbine aspiration / Grille mobile,boiler.flag_pusherGrate,
+,,,,,4,,Rostreinigung,Grate cleaning,Nettoyage grille,boiler.flag_grateCleaning,
+,,,,,8,,WTR,Heatexchanger cleaning,Nettoyage échangeur,boiler.flag_heatExchangerCleaning,
+,,,,,16,,Zündung Ventilator,Ignition fan,Ventilateur allumeur,boiler.flag_ignitionFan,
+,,,,,32,,Austragschnecke,Discharge screw,Vis extraction,boiler.flag_dischargeScrew,
+,,,,,64,,RSE Auf,BFP open,Clapet RSE ouvert,boiler.flag_backFireProtectionOpen,
+,,,,,128,,AAT / Behälterschnecke,Ash screw,Décendrage foyer / vis réservoir,boiler.flag_ashScrew,
+40036,2,0,,BIT,0,,,,,MULTIPLE,boiler
+,,,,,1,,Magnetventil / Abgaswärmetauscher,Magnetic valve,Electrovanne / Echangeur condensation,,
+,,,,,2,,AAT (PS CONDENSATION 80-101),Ash screw (PS CONDENSATION 80-101),Décendrage (PS CONDENSATION 80-101),,
+,,,,,4,,Rücklaufpumpe,Back flow pump,Pompe retour,boiler.flag_backFlowPump,
+,,,,,8,,Rücklaufmischer AUF,Back flow mixer open,Mélangeur retour ouvre,boiler.flat.backFlowMixerOpen,
+,,,,,16,,Rücklaufmischer ZU,Back flow mixer close,Mélangeur retour ferme,boiler.flat.backFlowMixerClosed,
+,,,,,32,,nicht verwendet,not used,Non utilisé,,
+,,,,,64,,Alarmausgang,Sum annoyance,Sortie alarme,,
+,,,,,128,,TÜB,Output temperature control,Surveillance température silo,,
+40038,2,0,,BIT,0,,,,,MULTIPLE,boiler
+,,,,,1,,Betriebsmelder,Operating alarm unit,Contact de marche,,
+,,,,,2,,Freigabe Einschubschnecke,Release of the stoker screw,Libération vis alimentation,,
+,,,,,4,,Lambdaheizung,Lambda heating,Chauffe Lambda,boiler.flag_lambdaHeating,
+,,,,,8,,nicht verwendet,not used,Non utilisé,,
+,,,,,16,,nicht verwendet,not used,Non utilisé,,
+,,,,,32,,nicht verwendet,not used,Non utilisé,,
+,,,,,64,,nicht verwendet,not used,Non utilisé,,
+,,,,,128,,Einschubschnecke,Stoker screw,Vis alimentation,boiler.flag_stokerScrew,
+40040,2,0,,BIT,0,,,,,MULTIPLE,boiler
+,,,,,1,,Anlage Halt,Burner stop,Arrêt brûleur,,
+,,,,,2,,TÜB,Temp. control storage room,Surveillance température silo,,
+,,,,,4,,RSE offen,BFP open,Clapet RSE ouvert,boiler.flag_rseOpen2,
+,,,,,8,,RSE geschlossen,BFP closed,Clapet RSE fermé,boiler.flag_rseClosed,
+,,,,,16,,Motorschutz AS,Motor prot. discharge screw,Disjoncteur moteur extraction,,
+,,,,,32,,Aschentür ZU / Brennraumtür ZU,Burning chamber door/ash door opened,Porte cendrier dermée / Porte foyer fermée,boiler.flag_chamberDoor,
+,,,,,64,,Endschalter AS,Endswitch room discharge,Contacteur bourrage vis extraction,,
+,,,,,128,,Zusatzeingang,Additional input,Entrée supplémentaire,,
+40042,2,0,,BIT,0,,,,,,
+,,,,,1,,AAT-Überwachung (PS CONDENSATION 80-101),Ashscrew controlling (PS CONDENSATION 80-101),Contrôle décendrage (PS CONDENSATION 80-101),VARIOUS,boiler
+,,,,,2,,Behälter leer,Tank empty,Réservoir vide,,
+,,,,,4,,Rost geschlossen,Grate closed,Grille fermée,,
+,,,,,8,,Vacutransklappe / AAT-Überwachung,Vacutrans flap / Ashscrew controlling,Clapet d'aspiration / Contrôle décendrage,,
+,,,,,16,,Fehler ZAAT,Fault centr. ash sys.,Défaut décendrage centralisé,,
+,,,,,32,,STB,STC,STB,,
+,,,,,64,,nicht verwendet,not used,Non utilisé,,
+,,,,,128,,nicht verwendet,not used,Non utilisé,,
+40044,2,0,h,INT,0,4294967296,Nennlast,Nominal load,Puissance nominale,total.nominalTime,total
+40046,2,0,h,INT,0,4294967296,Modulation,Modulation,Modulation,,
+40048,2,0,h,INT,0,4294967296,Teillast,Part load,Puissance minimale,,
+40050,2,0,h,INT,0,4294967296,An-/Ausbrennen,Scorch- /burn out,Début/Fin de combustion,total.partTime,total
+40052,2,0,h,INT,0,4294967296,Kessellaufzeit,Boiler run time,Durée fonctionnement chaudière,total.runTime,total
+40054,2,0,h,INT,0,4294967296,Gesamt,Total,Ensemble,total.totalTime,total
+40080,2,0,,MAP,0,4,,,,,
+,,,,,0,,-,-,-,,
+,,,,,1,,Fehler,Error,Défaut,,
+,,,,,2,,nicht angewählt,Not selected,Non sélectionné,,
+,,,,,4,,Kessel,Boiler,Chaudière,,
+40082,2,0,%,DEC 1,0,100,Aktivität Rost,Activity Grate,Activité grille,,
+40084,2,0,%,DEC 1,0,100,Aktivität Beschickung,Activity Feed,Activité alimentation,,
+40086,2,0,Pa,DEC 1,0,300,Unterdruck,Under pressure,Dépression,,
+40088,2,0,Pa,DEC 1,0,300,Unterdruck-Soll,Under pressure must,Consigne dépression,,
+40090,2,2,%,DEC 1,30,100,Max.Kesselleistung,Boiler power max.,Puissance chaudière max.,,
+40094,2,0,%,DEC 1,0,100,RL-Pumpe PWM,Back flow pump PWM,Pompe retour PWM,,
+40096,2,0,%,DEC 1,0,100,Rauchgasrezirkulation,Flue gas recirculation,Recirculation fumées,,
+,,,,,,,,,,,
+,,,,,,,Puffer,,,,
+41000,2,,,MAP INT,0,17,Statusbyte,-,-,,
+,,,,,1,,Fehler,Error,Défaut,,
+,,,,,2,,nicht angewählt,Not selected,Non sélectionné,,
+,,,,,3,,Kesselhaus,Boiler room,Chaufferie,,
+,,,,,4,,Kessel,Boiler,Chaudière,,
+,,,,,5,,Haus,House,Maison,,
+,,,,,6,,Terminal,Terminal,Terminal,,
+,,,,,7,,Vrnet,Vrnet,Vrnet,,
+,,,,,8,,Puffer,Buffer,Accumulateur,,
+,,,,,9,,Boiler,Hot water tank,Boiler / ECS,,
+,,,,,10,,Heizkreis,Heating circuit,Circuit de chauffage,,
+,,,,,11,,Solar,Solar,Solaire,,
+,,,,,12,,Weiche,Hydraulic compensator,Découplage hydraulique,,
+,,,,,13,,Netzpumpe,Net pump,Pompe réseau,,
+,,,,,14,,Zusatzkessel,Additional boiler,Chaudière auxiliaire,,
+,,,,,15,,Zonenventil,Zone valve,Vanne sectorielle,,
+,,,,,16,,Externe Anforderung,External demand,Demande externe,,
+,,,,,17,,Zeitbetrieb,Time mode,Mode horaire,,
+41002,2,,°C,DEC 1,-50,160,Puffer-Oben-Ist,Buffer top actual,Accumulateur haut est,buffer.temperatureTop.actual,buffer
+41004,2,,°C,DEC 1,-50,160,Puffer-Unten-Ist,Buffer bottom actual,Accumulateur bas est,buffer.temperatureBottom.actual,buffer
+41006,2,,°C,DEC 1,-50,160,Aussentemperatur,Outside temperature,Température extérieure,buffer.temperatureOutside.actual,buffer
+41008,2,,°C,DEC 1,-50,160,Puffer-Mitte-Ist,Buffer middle actual,Accumulateur milieu est,buffer.temperatureMiddle.actual,buffer
+41010,,,,,,,nicht verwendet,not used,Non utilisé,,
+41012,2,,,BIT,0,4294967296,Ein-/Ausgänge,In-/Outputs,Entrées / Sorties,VARIOUS,buffer
+,,,,extern,1,,Pufferladepumpe,Buffer loading pump,Pompe de charge accumulateur,buffer.flag_loadingPumpExtern,
+,,,,extern,2,,Schnellaufheizung AUF,Fastrun open,Chauffe rapide ouvert,,
+,,,,extern,4,,Schnellaufheizung ZU,Fastrun close,Chauffe rapide fermé,,
+,,,,extern,8,,nicht verwendet,not used,Non utilisé,,
+,,,,intern,1,,Schnellaufheizung AUF,Fastrun open,Chauffe rapide ouvert,buffer.flag_loadingPumpIntern,
+,,,,intern,2,,Schnellaufheizung ZU,Fastrun close,Chauffe rapide fermé,,
+,,,,intern,4,,Pufferladepumpe,Buffer loading pump,Pompe de charge accumulateur,,
+,,,,intern,8,,nicht verwendet,not used,Non utilisé,,
+41014,2,,°C,DEC 1,0,120,Bedarfstemperatur,Required temperature,Température nécesaire,buffer.temp_required,buffer
+41016,2,,°C,DEC 1,0,90,Puffer-Soll,Must temperature,Consigne accumulateur,buffer.temp_target,buffer
+41018,2,,°C,DEC 1,-50,50,Tagesmittel-Ist,Day middle switching temperature,Moyenne jour est,buffer.temp_switch_actual,buffer
+41020,2,,°C,DEC 1,0,90,geforderte Temperatur,Required temperature,Température requise,buffer.temp_minimum,buffer
+41022,,,,,,,nicht verwendet,not used,Non utilisé,,
+41024,,,,,,,nicht verwendet,not used,Non utilisé,,
+41026,2,,,0,0,1,Sperrzeit aktiv,Barrier times active,Périodes verrouillés actif,,
+41028,,,,,,,nicht verwendet,not used,Non utilisé,,
+41030,,,,,,,nicht verwendet,not used,Non utilisé,,
+41032,,,,,,,nicht verwendet,not used,Non utilisé,,
+41034,,,,,,,nicht verwendet,not used,Non utilisé,,
+41036,,,,,,,nicht verwendet,not used,Non utilisé,,
+41038,,,,,,,nicht verwendet,not used,Non utilisé,,
+,,,,,,,,,,,
+,,,,,,,Heizkreis,,,,
+41040,2,,Statusbyte,MAP INT,0,17,,,,heating1.status,heating1
+,,,,,1,,Fehler,Error,Défaut,,
+,,,,,2,,nicht angewählt,Not selected,Non sélectionné,,
+,,,,,3,,Kesselhaus,Boiler room,Chaufferie,,
+,,,,,4,,Kessel,Boiler,Chaudière,,
+,,,,,5,,Haus,House,Maison,,
+,,,,,6,,Terminal,Terminal,Terminal,,
+,,,,,7,,Vrnet,Vrnet,Vrnet,,
+,,,,,8,,Puffer,Buffer,Accumulateur,,
+,,,,,9,,Boiler,Hot water tank,Boiler / ECS,,
+,,,,,10,,Heizkreis,Heating circuit,Circuit de chauffage,,
+,,,,,11,,Solar,Solar,Solaire,,
+,,,,,12,,Weiche,Hydraulic compensator,Découplage hydraulique,,
+,,,,,13,,Netzpumpe,Net pump,Pompe réseau,,
+,,,,,14,,Zusatzkessel,Additional boiler,Chaudière auxiliaire,,
+,,,,,15,,Zonenventil,Zone valve,Vanne sectorielle,,
+,,,,,16,,Externe Anforderung,External demand,Consigne externe,,
+,,,,,17,,Zeitbetrieb,Time mode,Mode horaire,,
+41042,2,,°C,DEC 1,-50,160,Vorlauf-Ist,Flow-actual,Départ est,heating1.flow_actual,heating1
+41044,2,,°C,DEC 1,-50,160,Rücklauf-Ist,Back flow-actual,Retour est,heating1.backFlow_actual,heating1
+41046,2,,°C,DEC 1,-50,160,Aussentemperatur,Outside temperature,Température extérieure,heating1.temp_outside_actual,heating1
+41048,2,,°C,DEC 1,-50,160,RaumIst vom Modul,Room actual temp. from module,Température ambiante par module,heating1.temp_room_actual,heating1
+41050,2,,°C,DEC 1,-50,160,RaumKorr vom Modul,Room correction from module,Correction température ambiante par module,heating1.temp_room_corrected,heating1
+41052,2,,Compound,BIT,0,4294967296,Ein-/Ausgänge,In-/Outputs,Entrées / sorties,,
+,,,,Extern,1,,Pumpe,Pump,Pompe,,
+,,,,,2,,Mischer AUF,Mixer open,Mélangeur ouvert,,
+,,,,,4,,Mischer ZU,Mixer close,Melangeur fermé,,
+,,,,,8,,nicht verwendet,not used,Non utilisé,,
+,,,,Intern,1,,Mischer AUF,Mixer open,Mélangeur ouvert,heating1.flag_mixerOpen,heating1
+,,,,,2,,Mischer ZU,Mixer close,Mélangeur fermé,heating1.flag_mixerClosed,heating1
+,,,,,4,,Pumpe,Pump,Pompe,heating1.flag_pump,heating1
+,,,,,8,,nicht verwendet,not used,Non utilisé,,
+41054,2,,°C,1,0,120,Bedarfstemperatur,Required temperature,Température nécessaire,,
+41056,2,,°C,1,0,90,Vorlauf-Soll,Flow must,Consigne départ,heating1.flow_target,heating1
+41058,2,,°C,1,-50,50,Tagesmittel-Ist,Day middle switching temperature,Moyenne jour est,heating1.temp_dayMiddle_actual,heating1
+41060,2,,°C,1,5,40,RaumSoll inkl. RaumKorr,Room must temp. incl. Room correction,Consigne ambiance avec correction ambiance,heating1.temp_roomTarget_corrected,heating1
+41062,2,,,,,,nicht verwendet,not used,Non utilisé,,
+41064,2,,°C,1,100,950,Vorlaufsolltemperatur via ModBus,Flow must via modbus,Consigne départ via modbus,,
+41066,2,,,0,0,1,Sperrzeit aktiv,Barrier times active,Périodes verrouillés actif,,
+41068,2,,,,,,nicht verwendet,not used,Non utilisé,,
+41070,2,,,,,,nicht verwendet,not used,Non utilisé,,
+41072,2,,,,,,nicht verwendet,not used,Non utilisé,,
+41074,2,,,,,,nicht verwendet,not used,Non utilisé,,
+41076,2,,,,,,nicht verwendet,not used,Non utilisé,,
+41078,2,,,,,,nicht verwendet,not used,Non utilisé,,

@@ -2,15 +2,6 @@ import os
 import tomllib
 
 
-class Configuration:
-    def __init__(self, config_dict):
-        self.log_level = config_dict["logging"]["level"]
-        self.modbus_host = config_dict["modbus"]["host"]
-        self.modbus_port = config_dict["modbus"]["port"]
-        self.mqtt_host = config_dict["tedge"]["mqtt"]["host"]
-        self.mqtt_port = config_dict["tedge"]["mqtt"]["port"]
-
-        self.register_mappings = config_dict["registers"]
 
 
 class TagValue:
@@ -23,10 +14,9 @@ class TagValue:
 class Register:
     """A holding register specification & parsing utility"""
 
-    def __init__(self, number, size, interval, group):
+    def __init__(self, number, size, group):
         self.number = int(number)
         self.size = int(size)
-        self.interval = int(interval)
         self.group = group
 
     def parse(self, value) -> tuple[TagValue]:
@@ -39,8 +29,8 @@ class Register:
 
 
 class SimpleRegister(Register):
-    def __init__(self, number, size, interval, group, tag, description):
-        super().__init__(number, size, interval, group)
+    def __init__(self, number, size, group, tag, description):
+        super().__init__(number, size, group)
         self.description = description
         self.tag = tag
 
@@ -57,8 +47,8 @@ class IntRegister(SimpleRegister):
         return int(value)
 
 class DecimalRegister(SimpleRegister):
-    def __init__(self, number, size, interval, group, tag, description, decimal_places):
-        super().__init__(number, size, interval, group, tag, description)
+    def __init__(self, number, size, group, tag, description, decimal_places):
+        super().__init__(number, size, group, tag, description)
         self.decimal_places = decimal_places
 
     def _parse(self, value):
@@ -66,8 +56,8 @@ class DecimalRegister(SimpleRegister):
 
 class MapRegister(SimpleRegister):
 
-    def __init__(self, number, size, interval, group, tag, description, value_parser, value_map):
-        super().__init__(number, size, interval, group, tag, description)
+    def __init__(self, number, size, group, tag, description, value_parser, value_map):
+        super().__init__(number, size, group, tag, description)
         self.value_parser = value_parser
         self.value_map = value_map
 
@@ -77,8 +67,8 @@ class MapRegister(SimpleRegister):
 
 class BitRegister(Register):
 
-    def __init__(self, number, size, interval, group, bit_map):
-        super().__init__(number, size, interval, group)
+    def __init__(self, number, size, group, bit_map):
+        super().__init__(number, size, group)
         self.bit_map = bit_map
 
     def parse(self, value):
@@ -98,7 +88,6 @@ class RegisterSequence:
     def __init__(self, registers):
         self.registers = registers
         self.name = registers[0].group
-        self.interval = registers[0].interval
 
 
 class MeasurementGroup:
@@ -107,4 +96,3 @@ class MeasurementGroup:
     def __init__(self, name, register_sequences):
         self.name = name
         self.sequences = register_sequences
-        self.interval = register_sequences[0][0].interval

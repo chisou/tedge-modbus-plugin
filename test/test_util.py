@@ -2,7 +2,7 @@ from datetime import timedelta
 
 import pytest
 
-from tedge_modbus.util import now, next_timestamp
+from modbus_reader.util import now, next_timestamp
 
 
 @pytest.mark.parametrize(

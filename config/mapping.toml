@@ -1,0 +1,18 @@
+[registers]
+number = ["ID", "Reg.*", "Num.*"]
+size = ["Size", "Word.*", "Len.*"]
+type = ["Type", "Format", "Fmt"]
+uom = ["UOM", "Unit"]
+value = ["Val.*"]
+min = ["Min.*"]
+max = ["Max.*"]
+description = ["Desc.*", "De", "Deu.*", "Ger.*", "En.*", "Fr.*"]
+tag = ["Tag.*", "Target.*", "Map.*"]
+device = ["Dev.*"]
+group = ["Group", "Set", "Target"]
+
+[default]
+interval = 60
+
+[groups.total]
+interval = 300
