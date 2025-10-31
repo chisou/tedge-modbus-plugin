@@ -90,4 +90,4 @@ def format_message(ts, device, group, tag_values):
             data[l0] = {}
         data[l0][l1] = tag_value.value
 
-    return f'te/device/{device}///m//', json.dumps(data)
+    return f'te/device/{device}///m/', json.dumps(data)
