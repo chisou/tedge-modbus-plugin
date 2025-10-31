@@ -141,6 +141,7 @@ async def main():
                     for sequence in group.sequences:
                         tag_values.extend(await collect_data(modbus_client, sequence))
                     topic, payload = format_message(due_ts, 'main', group.name, tag_values)
+                    log.info(f"Publishing MQTT message to {topic}: {payload}")
                     mqtt_client.publish(topic, payload)
                     next_ts = next_timestamp(group_intervals[group])
                     next_timestamps[group] = next_ts

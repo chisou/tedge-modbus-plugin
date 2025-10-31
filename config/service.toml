@@ -9,7 +9,7 @@ host = "localhost"
 port = 1883
 
 [logging]
-level = "INFO"
+level = "DEBUG"
 
 [core]
 loop.interval = 10
