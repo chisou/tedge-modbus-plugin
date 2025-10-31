@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=simple
 User=root
-ExecStart=/usr/bin/python3 -m tedge_modbus -c /etc/modbus_reader/
+ExecStart=/usr/bin/python3 -m modbus_reader -c /etc/modbus_reader/
 Environment="PYTHONUNBUFFERED=1"
 
 Restart=on-failure

@@ -19,7 +19,7 @@ from modbus_reader.parser import RegisterLoader, CsvParser
 from modbus_reader.util import next_timestamp
 
 # Configuration
-CONFIG_DIR = '/etc/tedge/plugins/modbus/'
+CONFIG_DIR = '/etc/modbus_reader/'
 LOG_FORMAT = '%(asctime)s [%(levelname)s] %(name)s:%(lineno)d — %(message)s'
 DATE_FORMAT = "%Y-%m-%dT%H:%M:%S%z"
 
