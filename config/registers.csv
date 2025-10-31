@@ -48,8 +48,8 @@ Register,Words,Offset,UOM,Format,Min,Max,German,English,French,Tag,Group
 ,,,,,1,,Magnetventil / Abgaswärmetauscher,Magnetic valve,Electrovanne / Echangeur condensation,,
 ,,,,,2,,AAT (PS CONDENSATION 80-101),Ash screw (PS CONDENSATION 80-101),Décendrage (PS CONDENSATION 80-101),,
 ,,,,,4,,Rücklaufpumpe,Back flow pump,Pompe retour,boiler.flag_backFlowPump,
-,,,,,8,,Rücklaufmischer AUF,Back flow mixer open,Mélangeur retour ouvre,boiler.flat.backFlowMixerOpen,
-,,,,,16,,Rücklaufmischer ZU,Back flow mixer close,Mélangeur retour ferme,boiler.flat.backFlowMixerClosed,
+,,,,,8,,Rücklaufmischer AUF,Back flow mixer open,Mélangeur retour ouvre,boiler.flag_backFlowMixerOpen,
+,,,,,16,,Rücklaufmischer ZU,Back flow mixer close,Mélangeur retour ferme,boiler.flag_backFlowMixerClosed,
 ,,,,,32,,nicht verwendet,not used,Non utilisé,,
 ,,,,,64,,Alarmausgang,Sum annoyance,Sortie alarme,,
 ,,,,,128,,TÜB,Output temperature control,Surveillance température silo,,
@@ -118,10 +118,10 @@ Register,Words,Offset,UOM,Format,Min,Max,German,English,French,Tag,Group
 ,,,,,15,,Zonenventil,Zone valve,Vanne sectorielle,,
 ,,,,,16,,Externe Anforderung,External demand,Demande externe,,
 ,,,,,17,,Zeitbetrieb,Time mode,Mode horaire,,
-41002,2,,°C,DEC 1,-50,160,Puffer-Oben-Ist,Buffer top actual,Accumulateur haut est,buffer.temperatureTop.actual,buffer
-41004,2,,°C,DEC 1,-50,160,Puffer-Unten-Ist,Buffer bottom actual,Accumulateur bas est,buffer.temperatureBottom.actual,buffer
-41006,2,,°C,DEC 1,-50,160,Aussentemperatur,Outside temperature,Température extérieure,buffer.temperatureOutside.actual,buffer
-41008,2,,°C,DEC 1,-50,160,Puffer-Mitte-Ist,Buffer middle actual,Accumulateur milieu est,buffer.temperatureMiddle.actual,buffer
+41002,2,,°C,DEC 1,-50,160,Puffer-Oben-Ist,Buffer top actual,Accumulateur haut est,buffer.temp_top_actual,buffer
+41004,2,,°C,DEC 1,-50,160,Puffer-Unten-Ist,Buffer bottom actual,Accumulateur bas est,buffer.temp_bottom_actual,buffer
+41006,2,,°C,DEC 1,-50,160,Aussentemperatur,Outside temperature,Température extérieure,buffer.temp_outside_actual,buffer
+41008,2,,°C,DEC 1,-50,160,Puffer-Mitte-Ist,Buffer middle actual,Accumulateur milieu est,buffer.temp_middle_actual,buffer
 41010,,,,,,,nicht verwendet,not used,Non utilisé,,
 41012,2,,,BIT,0,4294967296,Ein-/Ausgänge,In-/Outputs,Entrées / Sorties,VARIOUS,buffer
 ,,,,extern,1,,Pufferladepumpe,Buffer loading pump,Pompe de charge accumulateur,buffer.flag_loadingPumpExtern,

@@ -13,7 +13,7 @@ from datetime import datetime
 from pymodbus.client import AsyncModbusTcpClient
 
 from modbus_reader.config import Configuration
-from modbus_reader.core import assemble_groups, tedge_compile, collect_data
+from modbus_reader.core import assemble_groups, format_message, collect_data
 from modbus_reader.mqtt import MqttClient
 from modbus_reader.parser import RegisterLoader, CsvParser
 from modbus_reader.util import next_timestamp
@@ -27,9 +27,6 @@ MQTT_HOST = 'localhost'
 MQTT_PORT = 1883
 
 
-log = logging.getLogger()
-logging.basicConfig(level=logging.DEBUG)
-
 
 async def main():
 
@@ -42,6 +39,7 @@ async def main():
     configuration = Configuration(config_dir)
 
     # init logging
+    log = logging.getLogger(__name__)
     logging.basicConfig(
         datefmt=DATE_FORMAT,
         format=LOG_FORMAT,
@@ -77,18 +75,39 @@ async def main():
 
     groups = assemble_groups(registers)
     log.info(f"Found {len(groups)} logical register groups.")
+
+    try:
+        group_intervals = {
+            group: (
+                configuration.mapping.groups[group.name].interval
+                if group.name in configuration.mapping.groups
+                else configuration.mapping.default.interval
+            ) for group in groups
+        }
+    except KeyError as e:
+        log.error(f"Unable to resolve sampling interval for group '{e}'.")
+        sys.exit(2)
+
     for group in groups:
-        log.info(f'Group "{group.name}": Interval {group.interval} seconds')
+        log.info(f'Group "{group.name}": Interval {group_intervals[group]} seconds')
         for i, sequence in enumerate(group.sequences):
             log.info(f'  - Sequence {i+1}:')
             for register in sequence:
                 log.info(f'     - Register {register.number}')
 
-    modbus_client = AsyncModbusTcpClient(configuration.modbus_host, port=configuration.modbus_port)
-    await modbus_client.connect()
+    try :
+        modbus_client = AsyncModbusTcpClient(configuration.modbus.host, port=configuration.modbus.port)
+        await modbus_client.connect()
+    except Exception as e:
+        log.error(f"Unable to connect to Modbus server: {str(e)}")
+        sys.exit(2)
 
-    mqtt_client = MqttClient(MQTT_HOST, MQTT_PORT)
-    await mqtt_client.start()
+    try:
+        mqtt_client = MqttClient(configuration.mqtt.host, configuration.mqtt.port)
+        await mqtt_client.start()
+    except Exception as e:
+        log.error(f"Unable to connect to MQTT server: {str(e)}")
+        sys.exit(2)
 
     # === main loop ====
 
@@ -106,7 +125,7 @@ async def main():
 
         # set initial due times to be in the past
         next_timestamps = {
-            group: next_timestamp(group.interval)-group.interval
+            group: next_timestamp(group_intervals[group])-group_intervals[group]
             for group in groups
         }
 
@@ -121,9 +140,9 @@ async def main():
                     tag_values = []
                     for sequence in group.sequences:
                         tag_values.extend(await collect_data(modbus_client, sequence))
-                    topic, payload = tedge_compile(due_ts, group.name, tag_values)
+                    topic, payload = format_message(due_ts, 'main', group.name, tag_values)
                     mqtt_client.publish(topic, payload)
-                    next_ts = next_timestamp(group.interval)
+                    next_ts = next_timestamp(group_intervals[group])
                     next_timestamps[group] = next_ts
                     log.info(f"Next sample: {datetime.fromtimestamp(next_ts).isoformat()}")
 

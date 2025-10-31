@@ -4,12 +4,12 @@ port = 502
 offset = 0
 byteorder = "big"
 
-[tedge]
-mqtt.host = "localhost"
-mqtt.port = 1883
+[mqtt]
+host = "localhost"
+port = 1883
 
 [logging]
-level = "DEBUG"
+level = "INFO"
 
 [core]
 loop.interval = 10

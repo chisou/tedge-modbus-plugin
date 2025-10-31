@@ -33,14 +33,14 @@ def assemble_groups(registers):
             log.debug(f"Adding to sequence: {register.number}")
             chunk.append(register)
         else:
-            log.info(f"Found register sequence: {chunk[0].number} - {chunk[-1].number}")
+            log.info(f"Found register sequence: {chunk[0].number} - {chunk[-1].number}, Group {chunk[0].group}")
             sequences.append(chunk)
             chunk = [register]
             stop = False
 
         previous = register
 
-    log.info(f"Found final sequence: {chunk[0].number} - {chunk[-1].number}")
+    log.info(f"Found final sequence: {chunk[0].number} - {chunk[-1].number}, Group {chunk[0].group}")
     sequences.append(chunk)
 
     # order sequences by their group
@@ -82,13 +82,12 @@ async def collect_data(client, sequence):
     return result
 
 
-def tedge_compile(ts, group, tag_values):
-    device = tag_values[0].tag.split('.')[0]
-    data = {"time": datetime.fromtimestamp(ts, timezone.utc).isoformat()}
+def format_message(ts, device, group, tag_values):
+    data = {'time': datetime.fromtimestamp(ts, timezone.utc).isoformat()}
     for tag_value in tag_values:
-        _, l0, l1 = tag_value.tag.split('.')
+        l0, l1 = tag_value.tag.split('.')
         if l0 not in data:
             data[l0] = {}
         data[l0][l1] = tag_value.value
 
-    return f"te/device/{device}///m/{group}", json.dumps(data)
+    return f'te/device/{device}///m//', json.dumps(data)

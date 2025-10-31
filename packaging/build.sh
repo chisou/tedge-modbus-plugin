@@ -6,6 +6,13 @@ if [ -d dist ]; then
 fi
 mkdir -p dist
 
+# install local copy of pymodbus
+if [ -d modbus_reader/pymodbus ]; then
+  rm -rf modbus_reader/pymodbus
+fi
+pip3 install pymodbus==3.11.3 --target modbus_reader/pymodbus
+
+# build using nfpm
 docker run --rm \
   -v $(pwd):/workspace \
   -w /workspace \

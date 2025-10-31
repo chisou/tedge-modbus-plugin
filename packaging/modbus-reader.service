@@ -1,11 +1,11 @@
 [Unit]
-Description=thin-edge.io Modbus plugin
+Description=Generic Modbus to MQTT reader
 After=network.target
 
 [Service]
 Type=simple
 User=root
-ExecStart=/usr/bin/python3 -m tedge_modbus -c /etc/tedge/plugins/modbus/
+ExecStart=/usr/bin/python3 -m tedge_modbus -c /etc/modbus_reader/
 Environment="PYTHONUNBUFFERED=1"
 
 Restart=on-failure
