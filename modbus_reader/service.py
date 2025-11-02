@@ -140,8 +140,12 @@ async def main():
                     tag_values = []
                     for sequence in group.sequences:
                         tag_values.extend(await collect_data(modbus_client, sequence))
+                    log.info(f"Collected measurement group '{group.name}': {len(tag_values)} tags.")
+                    if log.isEnabledFor(logging.DEBUG):
+                        for tag_value in tag_values:
+                            log.debug(f" - {tag_value.tag} =  {tag_value.value} ({type(tag_value.value).__qualname__ if tag_value.value is not None else '-'})")
                     topic, payload = format_message(due_ts, 'main', group.name, tag_values)
-                    log.info(f"Publishing MQTT message to {topic}: {payload}")
+                    log.debug(f"Publishing MQTT message to {topic}: {payload}")
                     mqtt_client.publish(topic, payload)
                     next_ts = next_timestamp(group_intervals[group])
                     next_timestamps[group] = next_ts

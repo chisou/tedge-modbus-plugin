@@ -76,7 +76,7 @@ async def collect_data(client, sequence):
     for register, raw_value in zip(sequence, decoded):
         tag_values = register.parse(raw_value)
         for tag_value in tag_values:
-            log.info(f"  - {register.number}  ->  {tag_value.tag} = <{tag_value.value}>")
+            log.debug(f"  - {register.number}  ->  {tag_value.tag} = <{tag_value.value}>")
             result.append(tag_value)
 
     return result
